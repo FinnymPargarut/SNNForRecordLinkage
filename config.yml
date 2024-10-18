@@ -1,0 +1,11 @@
+name: options1
+
+SNN_args:
+    input_dim: 130  # 52 eng letters + 66 russian letters + 10 number + 1 space + 1 for character outside alphabet
+    hidden_dim: 64
+    num_layers: 2
+    num_heads: 4
+    dropout: 0.1
+
+input_data:
+    max_len: 10  # Max record length
