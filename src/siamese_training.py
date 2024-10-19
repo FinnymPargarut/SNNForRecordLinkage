@@ -1,4 +1,3 @@
-import os
 import yaml
 import torch
 import torch.optim as optim
@@ -6,7 +5,6 @@ from torch.utils.data import DataLoader
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 from siamese_neural_network import *
-from data_utils import create_pairs, RecordLinkageDataset
 
 
 class SiameseTraining:
@@ -67,26 +65,12 @@ class SiameseTraining:
         print(f'\033[32mEpoch [{current_epoch + 1}/{epochs}], Avg Loss: {avg_loss:.6f}\033[0m')
 
 
-def siamese_train():
-    # Creating data
-    records = [
-        "John Doe",
-        "Jon Doe",
-        "Jane Smith",
-        "Jan Smith",
-        "Alice Johnson",
-        "Alic Johnson"
-    ]
-
-    pairs, labels = create_pairs(records)
-
+if __name__ == '__main__':
     with open("config.yml", "r") as options:
-        config = yaml.safe_load(options)
-        args = config["SNN_args"]
-        max_len = config["input_data"]["max_len"]
+        args = yaml.safe_load(options)["SNN_args"]
 
-    dataset = RecordLinkageDataset(pairs, labels, max_len)
-    dataloader = DataLoader(dataset, batch_size=4, shuffle=True)
+    dataset = torch.load("../data/train_dataset.pt")
+    dataloader = DataLoader(dataset, batch_size=16, shuffle=True)
 
     # Initializing model and training components
     model = SiameseNetwork(**args)
@@ -102,7 +86,6 @@ def siamese_train():
     model.train()
     num_epochs = 10
     save_every = 5
-    MODELS_DIR = os.path.join(os.path.dirname(__file__), '../models')
     for epoch in range(num_epochs):
         snn_training.train(epoch, num_epochs, enable_prints=False)
 
@@ -115,7 +98,3 @@ def siamese_train():
     torch.save(optimizer.state_dict(), "../models/siamese_optimizer_final.pth")
 
     print("Training complete.")
-
-
-if __name__ == '__main__':
-    siamese_train()

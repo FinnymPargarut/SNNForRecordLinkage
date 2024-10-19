@@ -40,7 +40,7 @@ def get_SNN():
 
 if __name__ == '__main__':
     SNN = get_SNN()
-    r1 = "Jane Do"
-    r2 = "John Do"
+    r1 = "Степанов Максимильян Трифонович,osipovjuvenali@example.org,8 (953) 492-67-32"
+    r2 = "Носкова Евфросиния Матвеевна,ipatikostin@example.com,+7 878 256 83 73"
     is_duplicate = predict_duplicate(model=SNN, record1=r1, record2=r2)
     print(f"Записи являются дипликатами: {is_duplicate}")
