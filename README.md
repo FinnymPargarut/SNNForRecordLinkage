@@ -1,6 +1,6 @@
 # Siamese Neural Network for Record Linkage
 
-This repository implements a Siamese Neural Network (SNN) as a classifier for Record Linkage. This task was completed as part of the **Innohack** hackathon. The project includes the main functions for the SNN, with additional components such as graph processing, blocking, etc., available in the [unfinished project repository](https://gitflic.ru/project/task-force-141/innohack-solution).
+This repository implements a Siamese Neural Network (SNN) as a classifier for Record Linkage. This task was completed as part of the **Innohack** hackathon. The project includes functions for the SNN, with others components such as graph processing, blocking, etc., available in the [unfinished project repository](https://gitflic.ru/project/task-force-141/innohack-solution).
 
 ## Overview
 
