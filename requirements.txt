@@ -1,2 +1,4 @@
+Faker==30.6.0
+pandas==2.2.3
 PyYAML==6.0.2
 torch==2.4.1
