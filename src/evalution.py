@@ -1,11 +1,16 @@
 import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+
 from siamese_predict import get_SNN
+from data_utils import RecordLinkageDataset  # used in torch.load
 
 
 def counter():
-    """Calculates and prints the average distances for labels 0 and 1 in the dataset."""
+    """
+    Calculates and prints the average distances for labels 0 and 1 in the dataset.
+    It needs to choose threshold for classification.
+    """
     distances_label_0 = []
     distances_label_1 = []
 
@@ -32,10 +37,10 @@ def counter():
 
 def evaluate_model(threshold):
     """
-    Evaluates the model's performance on the test dataset using the given threshold and
-    prints accuracy, precision, recall, and F1 score.
+    Evaluates the model's performance on the test dataset using the given threshold.
+    Prints accuracy, precision, recall, and F1 score.
     """
-    dataset = torch.load("/kaggle/working/test_dataset.pt")
+    dataset = torch.load("../data/test_dataset.pt")
     dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
 
     SNN = get_SNN()
@@ -52,6 +57,9 @@ def evaluate_model(threshold):
 
         true_labels.append(label.item())
         predicted_labels.append(predicted_label)
+
+    true_labels = torch.tensor(true_labels)
+    predicted_labels = torch.tensor(predicted_labels)
 
     accuracy = (predicted_labels == true_labels).float().mean().item()
     precision = (predicted_labels[true_labels == 1] == 1).float().mean().item()

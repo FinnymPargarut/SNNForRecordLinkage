@@ -76,7 +76,7 @@ if __name__ == '__main__':
     # Initializing model and training components
     model = SiameseNetwork(**args)
     criterion = ContrastiveLoss(margin=1.0)
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=0.01)
     scheduler = ReduceLROnPlateau(optimizer, 'min', patience=3, factor=0.2)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -85,8 +85,8 @@ if __name__ == '__main__':
     # Starting training
     snn_training = SiameseTraining(model, dataloader, criterion, optimizer, scheduler, device)
     model.train()
-    num_epochs = 10
-    save_every = 5
+    num_epochs = 40
+    save_every = 10
     for epoch in range(num_epochs):
         snn_training.train(epoch, num_epochs, enable_prints=False)
 

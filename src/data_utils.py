@@ -130,5 +130,5 @@ def save_train_test_split(check_labels_distribution=True):
 
 
 if __name__ == '__main__':
-    create_record_list()
+    # create_record_list()
     save_train_test_split()

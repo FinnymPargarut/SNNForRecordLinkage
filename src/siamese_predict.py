@@ -34,7 +34,8 @@ def get_SNN():
         args = yaml.safe_load(options)["SNN_args"]
 
     model = SiameseNetwork(**args)
-    model.load_state_dict(torch.load("../models/siamese_model_final.pth", weights_only=True))
+    model.load_state_dict(torch.load("../models/siamese_model_final.pth", weights_only=True,
+                                     map_location=torch.device('cpu')))
     model.eval()
 
     return model
