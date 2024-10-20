@@ -1,16 +1,27 @@
 # Siamese Neural Network for Record Linkage
 
-This repository implements a Siamese Neural Network (SNN) as a classifier for Record Linkage. This task was completed as part of the **Innohack** hackathon. The project includes functions for the SNN, with others components such as graph processing, blocking, etc., available in the [unfinished project repository](https://gitflic.ru/project/task-force-141/innohack-solution).
+This repository implements a Siamese Neural Network (SNN) as a classifier for Record Linkage. This task was completed as part of the **Innohack** hackathon. The project includes functions for the SNN, with other components such as graph processing, blocking, etc., available in the [unfinished project repository](https://gitflic.ru/project/task-force-141/innohack-solution).
 
 ## Overview
 
-The SNN consists of two subnetworks, each representing a `transformerEncoder`. These subnetworks convert records into vectors, and the SNN optimizes `ContrastiveLoss` to maximizes or minimizes the distance between these vectors depending on the label.
+The SNN consists of two subnetworks, each representing a `transformerEncoder`. These subnetworks convert records into vectors, and the SNN optimizes `ContrastiveLoss` to maximize or minimize the distance between these vectors depending on the label.
 
 ## Key Features
 
 - **Dual Subnetworks**: Each subnetwork is a `transformerEncoder` that processes records into vectors.
 - **Contrastive Loss**: The model optimizes ContrastiveLoss to adjust the distance between vectors based on the label.
 - **Record Linkage**: The SNN is designed to classify records based on their similarity, making it suitable for Record Linkage tasks.
+
+## Metrics
+
+For evaluating the performance of the Siamese Neural Network, I used the following metrics:
+
+- **Accuracy**
+- **Precision**
+- **Recall**
+- **F1 Score**
+
+The training process and the results of the evaluation based on these metrics can be viewed [here](https://www.kaggle.com/code/finnympargarut/snnforrecordlinkage).
 
 ## Potential Improvements
 
