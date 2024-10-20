@@ -1,7 +1,7 @@
 name: options1
 
 SNN_args:
-    input_dim: 131  # 52 eng letters + 66 ru letters + 10 number + 1 space + 1 comma + 1 for character outside alphabet
+    input_dim: 72  # 26 eng letters + 33 ru letters + 10 number + 1 space + 1 comma + 1 for character outside alphabet
     hidden_dim: 64
     num_layers: 2
     num_heads: 4

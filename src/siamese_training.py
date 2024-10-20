@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 from siamese_neural_network import *
+from data_utils import RecordLinkageDataset  # used in torch.load
 
 
 class SiameseTraining:

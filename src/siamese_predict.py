@@ -1,10 +1,12 @@
 import yaml
 from siamese_neural_network import *
-from data_utils import record_to_tensor
+from data_utils import record_to_tensor, post_process_data
 
 
 def predict_duplicate(model, record1, record2, threshold=0.5):
     """Function to predict if two records are duplicates"""
+    record1 = post_process_data(record1)
+    record2 = post_process_data(record2)
 
     with open("config.yml", "r") as options:
         max_len = yaml.safe_load(options)["input_data"]["max_len"]
@@ -42,5 +44,5 @@ if __name__ == '__main__':
     SNN = get_SNN()
     r1 = "Степанов Максимильян Трифонович,osipovjuvenali@example.org,8 (953) 492-67-32"
     r2 = "Носкова Евфросиния Матвеевна,ipatikostin@example.com,+7 878 256 83 73"
-    is_duplicate = predict_duplicate(model=SNN, record1=r1, record2=r2)
-    print(f"Записи являются дипликатами: {is_duplicate}")
+    is_duplicate = predict_duplicate(model=SNN, record1=r1, record2=r2, threshold=0.0002)
+    print(f"Записи являются дубликатами: {is_duplicate}")

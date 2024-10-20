@@ -1,8 +1,8 @@
 import pandas as pd
 import yaml
 from faker import Faker
+import torch
 from torch.utils.data import Dataset, random_split
-from siamese_neural_network import *
 from data_augmentation import augmentation
 
 
@@ -10,18 +10,14 @@ def char_to_index(char):
     """Converts characters to index its character embeddings"""
     if 'a' <= char <= 'z':
         return ord(char) - ord('a') + 1
-    elif 'A' <= char <= 'Z':
-        return ord(char) - ord('A') + 27
     elif 'а' <= char <= 'я':
-        return ord(char) - ord('а') + 53
-    elif 'А' <= char <= 'Я':
-        return ord(char) - ord('А') + 86
+        return ord(char) - ord('а') + 27
     elif char.isdigit():
-        return ord(char) - ord('0') + 119
+        return ord(char) - ord('0') + 60
     elif char == ' ':
-        return 129
+        return 70
     elif char == ',':
-        return 130
+        return 71
     else:
         return 0
 
@@ -78,10 +74,20 @@ def create_record_list(records_count=100):
     data.to_csv("../data/record-list.csv", index=False)
 
 
+def post_process_data(str):
+    """Lower case all characters of string"""
+    return ''.join(c.lower() for c in str)
+
+
 def get_pairs_labels_with_augmentation():
     """
     Get augmented pairs and labels from record list in data directory.
     The labels contains balanced classes, meaning that the number of zeros and ones is equal.
+
+    The data in each pair is processed as follows:
+    1. Augmentation is applied to the name, email, and phone.
+    2. The augmentation results are concatenated into a single string.
+    3. All characters in the string are converted to lowercase (as postprocessing).
     """
     data = pd.read_csv("../data/record-list.csv")
     pairs = []
@@ -92,6 +98,9 @@ def get_pairs_labels_with_augmentation():
             for _ in range(aug_count):
                 first_elem = ",".join(augmentation(data["Name"].iloc[i], data["Email"].iloc[i], data["Phone"].iloc[i]))
                 second_elem = ",".join(augmentation(data["Name"].iloc[j], data["Email"].iloc[j], data["Phone"].iloc[j]))
+
+                first_elem = post_process_data(first_elem)
+                second_elem = post_process_data(second_elem)
 
                 pairs.append((first_elem, second_elem))
                 labels.append(1 if i == j else 0)
